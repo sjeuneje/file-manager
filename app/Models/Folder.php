@@ -9,14 +9,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Folder extends Model
 {
-    use HasFactory;
-
     protected $table = 'folders';
 
     protected $fillable = [
         'user_id',
         'parent_id',
         'name',
+        'path',
+        'size',
         'created_at',
         'updated_at'
     ];
@@ -31,5 +31,14 @@ class Folder extends Model
         return $q
             ->whereNull('parent_id')
             ->where('user_id', $userId);
+    }
+
+    public function scopeNameExist($q, int $userId, ?int $parentId, string $name)
+    {
+        return $q
+            ->where('user_id', $userId)
+            ->where('parent_id', $parentId)
+            ->where('name', $name)
+            ->exists();
     }
 }

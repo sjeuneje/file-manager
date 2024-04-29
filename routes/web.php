@@ -16,7 +16,10 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', [FolderController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', [FolderController::class, 'index'])->name('dashboard');
+    Route::post('/dashboard/folders', [FolderController::class, 'store'])->name('dashboard.folders.create');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

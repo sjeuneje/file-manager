@@ -1,4 +1,39 @@
+import {router, useForm, usePage} from "@inertiajs/react";
+
 export default function FolderTable({ folders }) {
+    const user = usePage().props.auth.user;
+
+    const { data, setData, post, errors, processing } = useForm({
+        user_id: user.id,
+        parent_id: null,
+        name: 'Test folder'
+    });
+
+    console.log(errors);
+
+    const submit = (e) => {
+        e.preventDefault();
+
+        post(route('dashboard.folders.create'));
+    }
+
+    if (folders.length < 1) {
+        return (
+            <div className="flex flex-col justify-center items-center w-full">
+                <h3>Il semblerait qu'aucun dossier n'est stocké...</h3>
+                <form onSubmit={submit}>
+                    <button
+                        type="submit"
+                        className="cursor-pointer text-indigo-500 hover:text-indigo-400"
+                        disabled={processing}
+                    >
+                        Stocker un nouveau dossier maintenant
+                    </button>
+                </form>
+            </div>
+        )
+    }
+
     return (
         <div className="border rounded-lg w-full">
             <div className="relative w-full overflow-auto">
@@ -7,16 +42,16 @@ export default function FolderTable({ folders }) {
                         <thead className="[&amp;_tr]:border-b">
                             <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
                                 <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 w-[200px]">
-                                    Name
+                                    Nom
                                 </th>
                                 <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
-                                    Last modified
+                                    Dernière modification
                                 </th>
                                 <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
-                                    Owner
+                                    Propriétaire
                                 </th>
                                 <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
-                                    Size
+                                    Taille
                                 </th>
                                 <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 w-[200px]">
                                     Actions
@@ -37,7 +72,7 @@ export default function FolderTable({ folders }) {
                                         </td>
                                         <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{new Date(folder.updated_at).toLocaleDateString()}</td>
                                         <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{folder.owner.name}</td>
-                                        <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">125 MB</td>
+                                        <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{folder.size} MB</td>
                                         <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
                                             <div className="flex items-center gap-2">
                                                 <button className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10 hover:bg-indigo-300 rounded-full">

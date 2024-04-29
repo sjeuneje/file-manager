@@ -16,6 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->string('name');
+            $table->string('path');
+            $table->integer('size');
             $table->timestamps();
 
             $table->foreign('parent_id')->references('id')->on('folders')->onDelete('cascade');
