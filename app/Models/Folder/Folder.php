@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Folder;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Folder extends Model
 {
@@ -21,10 +20,14 @@ class Folder extends Model
         'updated_at'
     ];
 
+    // Relations
+
     public function owner(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    // Scopes
 
     public function scopeWhereUserRoot($q, int $userId)
     {

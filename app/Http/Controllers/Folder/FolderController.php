@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Folder;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Folder\StoreNewFolderRequest;
-use App\Models\Folder;
+use App\Models\Folder\Folder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

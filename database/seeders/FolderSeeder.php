@@ -2,8 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Folder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Folder\Folder;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
