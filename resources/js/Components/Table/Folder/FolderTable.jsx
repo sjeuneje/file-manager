@@ -6,7 +6,7 @@ export default function FolderTable({ folders }) {
     const { data, setData, post, errors, processing } = useForm({
         user_id: user.id,
         parent_id: null,
-        name: 'Test folder'
+        name: 'Dossier sans titre'
     });
 
     // console.log(errors);
