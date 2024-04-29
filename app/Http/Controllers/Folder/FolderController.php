@@ -39,12 +39,6 @@ class FolderController extends Controller
      */
     public function store(StoreNewFolderRequest $request)
     {
-        abort_if(Folder::nameExist(
-            $request->user_id,
-            $request->parent_id,
-            $request->name
-        ), 'Un dossier à ce nom existe déjà.', 400);
-
         if (!$request->parent_id) {
             $generatedFolderPath = 'folders' . '/' . $request->user_id . '/' . Str::random();
 
@@ -74,5 +68,14 @@ class FolderController extends Controller
         return redirect()->back()->with([
             'message' => 'Dossier créé avec succès !'
         ]);
+    }
+
+    public function destroy(Request $request)
+    {
+        Folder::query()
+            ->firstWhere($request->id)
+            ->delete();
+
+        return redirect()->back();
     }
 }
