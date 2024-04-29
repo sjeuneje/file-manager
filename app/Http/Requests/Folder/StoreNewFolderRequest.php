@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Folder;
 
-use App\Exceptions\ValidationException;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreNewFolderRequest extends FormRequest

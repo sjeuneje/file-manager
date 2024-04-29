@@ -3,13 +3,12 @@
 namespace App\Http\Controllers\Folder;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreNewFolderRequest;
+use App\Http\Requests\Folder\StoreNewFolderRequest;
 use App\Models\Folder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
