@@ -33,9 +33,12 @@ class FolderController extends Controller
         ]);
     }
 
+
     /**
      * Store a new folder in the storage.
      *
+     * @param StoreNewFolderRequest $request
+     * @return RedirectResponse
      */
     public function store(StoreNewFolderRequest $request)
     {
@@ -70,6 +73,12 @@ class FolderController extends Controller
         ]);
     }
 
+    /**
+     * Destroy the given folder from the storage.
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
     public function destroy(Request $request)
     {
         Folder::query()
