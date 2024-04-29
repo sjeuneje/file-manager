@@ -23,10 +23,10 @@ export default function Authenticated({ user, header, children }) {
 
                 <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                   <button className="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 transition duration-150 ease-in-out focus:outline-none  justify-center gap-1 border-transparent text-gray-500 hover:text-gray-700 hover:border-indigo-400">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-3 h-3">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                    </svg>
-                    <span>Nouveau</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M12 10.5v6m3-3H9m4.06-7.19-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z" />
+                      </svg>
+                      <span>Nouveau</span>
                   </button>
                 </div>
               </div>
@@ -96,11 +96,11 @@ export default function Authenticated({ user, header, children }) {
 
           <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
             <div className="pt-2 pb-3 space-y-1">
-              <button className="inline-flex items-center pl-4 pt-1 border-b-2 text-sm font-medium leading-5 transition duration-150 ease-in-out  justify-center gap-1 border-transparent text-gray-500">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-3 h-3">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                </svg>
-                <span>Nouveau</span>
+              <button className="inline-flex items-center pl-4 pt-1 border-b-2 text-sm font-medium leading-5 transition duration-150 ease-in-out justify-center gap-1 border-transparent text-gray-500">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 10.5v6m3-3H9m4.06-7.19-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z" />
+                  </svg>
+                  <span>Nouveau</span>
               </button>
             </div>
 
