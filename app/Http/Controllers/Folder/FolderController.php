@@ -66,7 +66,7 @@ class FolderController extends Controller
         }
 
         return redirect()->back()->with([
-            'message' => 'Dossier créé avec succès !'
+            'message' => 'Dossier créé avec succès.'
         ]);
     }
 
@@ -82,6 +82,8 @@ class FolderController extends Controller
             ->firstWhere($request->id)
             ->delete();
 
-        return redirect()->back();
+        return redirect()->back([
+            'message' => 'Dossier supprimé avec succès.'
+        ]);
     }
 }
