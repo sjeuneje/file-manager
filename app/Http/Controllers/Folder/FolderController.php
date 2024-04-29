@@ -23,12 +23,10 @@ class FolderController extends Controller
      */
     public function index(): Response
     {
-        $folders = Folder::whereUserRoot(Auth::user()->id)
-            ->with('owner')
-            ->get();
-
         return Inertia::render('Dashboard', [
-            'folders' => $folders
+            'folders' => Folder::whereUserRoot(Auth::user()->id)
+                ->with('owner')
+                ->get()
         ]);
     }
 
