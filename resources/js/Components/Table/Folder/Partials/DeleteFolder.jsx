@@ -1,76 +1,51 @@
-import InputLabel from "@/Components/InputLabel.jsx";
-import TextInput from "@/Components/TextInput.jsx";
-import InputError from "@/Components/InputError.jsx";
-import SecondaryButton from "@/Components/SecondaryButton.jsx";
-import DangerButton from "@/Components/DangerButton.jsx";
-import Modal from "@/Components/Modal/Modal.jsx";
-import {useState} from "react";
-import {useForm} from "@inertiajs/react";
+import {router, useForm, usePage} from "@inertiajs/react";
+import {useEffect, useState} from "react";
 
-export default function DeleteFolder({ folderId }) {
-    const [showModal, setShowModal] = useState(false);
-
+export default function DeleteFolder({ folderId, userId }) {
     const {
         data,
         setData,
         delete: destroy,
         processing,
+        reset,
         errors,
+        wasSuccessful
     } = useForm({
-        id: null
+        id: folderId,
+        user_id: userId
     });
 
-    const onSubmit = (e) => {
+    const onDelete = (e) => {
         e.preventDefault();
 
-        destroy(route('profile.destroy'), {
-            preserveScroll: true,
-            onSuccess: () => setShowModal(!showModal),
-            // onError: () => passwordInput.current.focus(),
-            // onFinish: () => reset(),
-        });
+        destroy(route('dashboard.folders.delete'));
     }
 
     return (
-        <>
-            <Modal show={showModal} onClose={() => setShowModal(!showModal)}>
-                <form onSubmit={deleteUser} className="p-6">
-                    <h2 className="text-lg font-medium text-gray-900">
-                        Are you sure you want to delete your account?
-                    </h2>
-
-                    <p className="mt-1 text-sm text-gray-600">
-                        Once your account is deleted, all of its resources and data will be permanently deleted. Please
-                        enter your password to confirm you would like to permanently delete your account.
-                    </p>
-
-                    <div className="mt-6">
-                        <InputLabel htmlFor="password" value="Password" className="sr-only" />
-
-                        <TextInput
-                            id="password"
-                            type="password"
-                            name="password"
-                            ref={passwordInput}
-                            value={data.password}
-                            onChange={(e) => setData('password', e.target.value)}
-                            className="mt-1 block w-3/4"
-                            isFocused
-                            placeholder="Password"
-                        />
-
-                        <InputError message={errors.password} className="mt-2" />
-                    </div>
-
-                    <div className="mt-6 flex justify-end">
-                        <SecondaryButton onClick={closeModal}>Cancel</SecondaryButton>
-
-                        <DangerButton className="ms-3" disabled={processing}>
-                            Delete Account
-                        </DangerButton>
-                    </div>
-                </form>
-            </Modal>
-        </>
+        <button
+            className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10 hover:bg-indigo-300 rounded-full"
+            onClick={onDelete}
+            disabled={processing}
+        >
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-4 w-4"
+            >
+                <path d="M3 6h18"></path>
+                <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                <line x1="10" x2="10" y1="11" y2="17"></line>
+                <line x1="14" x2="14" y1="11" y2="17"></line>
+            </svg>
+            <span className="sr-only">Delete</span>
+        </button>
     )
 }

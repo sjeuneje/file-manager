@@ -17,9 +17,11 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/dashboard', [FolderController::class, 'index'])->name('dashboard');
-    Route::post('/dashboard/folders', [FolderController::class, 'store'])->name('dashboard.folders.create');
-    Route::delete('/dashboard/folders', [FolderController::class, 'store'])->name('dashboard.folders.delete');
+    Route::prefix('dashboard')->group(function () {
+        Route::get('', [FolderController::class, 'index'])->name('dashboard');
+        Route::post('folders', [FolderController::class, 'store'])->name('dashboard.folders.create');
+        Route::delete('folders', [FolderController::class, 'destroy'])->name('dashboard.folders.delete');
+    });
 });
 
 Route::middleware('auth')->group(function () {

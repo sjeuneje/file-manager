@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Folder;
 
+use App\Actions\Folder\CreateFolderWithoutParent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Folder\StoreNewFolderRequest;
 use App\Models\Folder\Folder;
@@ -40,29 +41,7 @@ class FolderController extends Controller
     public function store(StoreNewFolderRequest $request)
     {
         if (!$request->parent_id) {
-            $generatedFolderPath = 'folders' . '/' . $request->user_id . '/' . Str::random();
-
-            try {
-                Storage::makeDirectory($generatedFolderPath);
-            } catch (\Exception $e) {
-                Log::error($e->getMessage(), $request->all());
-                abort(400, 'Une erreur est survenue lors de la création du dossier.');
-            }
-
-            try {
-                Folder::query()
-                    ->create([
-                        'path' => $generatedFolderPath,
-                        'user_id' => $request->user_id,
-                        'parent_id' => $request->parent_id,
-                        'name' => $request->name,
-                        'size' => 0
-                    ]);
-            } catch (\Exception $e) {
-                Log::error($e->getMessage(), $request->all());
-                Storage::deleteDirectory($generatedFolderPath);
-                abort(400, 'Une erreur est survenue lors de la création du dossier.');
-            }
+            (new CreateFolderWithoutParent($request))->execute();
         }
 
         return redirect()->back()->with([
@@ -78,12 +57,31 @@ class FolderController extends Controller
      */
     public function destroy(Request $request)
     {
-        Folder::query()
-            ->firstWhere($request->id)
-            ->delete();
+        $folder = Folder::query()
+            ->firstWhere([
+                'id' => $request->id,
+                'user_id' => $request->user_id
+            ]);
 
-        return redirect()->back([
-            'message' => 'Dossier supprimé avec succès.'
+        if (!$folder) {
+            return redirect()->back()->withErrors([
+                'errors' => [
+                    'Dossier non trouvé.'
+                ]
+            ]);
+        }
+
+        $deleted = Storage::deleteDirectory($folder->path);
+
+        abort_if(!$deleted, 400, 'Un problème est survenu lors de la suppression du dossier.');
+
+        $folder->delete();
+
+        return redirect()->back()->with([
+            'message' => 'Dossier supprimé avec succès.',
+            'folders' => Folder::whereUserRoot(Auth::user()->id)
+                ->with('owner')
+                ->get()
         ]);
     }
 }

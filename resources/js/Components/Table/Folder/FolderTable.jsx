@@ -1,35 +1,22 @@
 import {router, useForm, usePage} from "@inertiajs/react";
+import DeleteFolder from "@/Components/Table/Folder/Partials/DeleteFolder.jsx";
 
-export default function FolderTable({ folders }) {
+export default function FolderTable({ folders, setShowFolderCreationModal }) {
     const user = usePage().props.auth.user;
-
-    const { data, setData, post, errors, processing } = useForm({
-        user_id: user.id,
-        parent_id: null,
-        name: 'Dossier sans titre'
-    });
-
-    // console.log(errors);
-
-    const submit = (e) => {
-        e.preventDefault();
-
-        post(route('dashboard.folders.create'));
-    }
 
     if (folders.length < 1) {
         return (
             <div className="flex flex-col justify-center items-center w-full">
-                <h3>Il semblerait qu'aucun dossier n'est stocké...</h3>
-                <form onSubmit={submit}>
+                <h3>Il semblerait que votre espace de stockage soit vide...</h3>
+                <div>
                     <button
                         type="submit"
-                        className="cursor-pointer text-indigo-500 hover:text-indigo-400"
-                        disabled={processing}
+                        className="cursor-pointer text-gray-900 hover:text-gray-800 underline"
+                        onClick={() => setShowFolderCreationModal(true)}
                     >
                         Stocker un nouveau dossier maintenant
                     </button>
-                </form>
+                </div>
             </div>
         )
     }
@@ -59,9 +46,9 @@ export default function FolderTable({ folders }) {
                             </tr>
                         </thead>
                         <tbody className="[&amp;_tr:last-child]:border-0">
-                            {folders.map((folder, key) => {
+                            {folders.map((folder) => {
                                 return (
-                                    <tr key={key} className="cursor-pointer border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted hover:bg-indigo-100 transition ease-in-out duration-150">
+                                    <tr key={folder.id} className="cursor-pointer border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted hover:bg-indigo-100 transition ease-in-out duration-150">
                                         <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
                                             <div className="flex flex-row items-center gap-2">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
@@ -101,27 +88,10 @@ export default function FolderTable({ folders }) {
                                                     </svg>
                                                     <span className="sr-only">Download</span>
                                                 </button>
-                                                <button className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10 hover:bg-indigo-300 rounded-full">
-                                                    <svg
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        width="24"
-                                                        height="24"
-                                                        viewBox="0 0 24 24"
-                                                        fill="none"
-                                                        stroke="currentColor"
-                                                        strokeWidth="2"
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        className="h-4 w-4"
-                                                    >
-                                                        <path d="M3 6h18"></path>
-                                                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
-                                                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
-                                                        <line x1="10" x2="10" y1="11" y2="17"></line>
-                                                        <line x1="14" x2="14" y1="11" y2="17"></line>
-                                                    </svg>
-                                                    <span className="sr-only">Delete</span>
-                                                </button>
+                                                <DeleteFolder
+                                                    folderId={folder.id}
+                                                    userId={user.id}
+                                                />
                                             </div>
                                         </td>
                                     </tr>

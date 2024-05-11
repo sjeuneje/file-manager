@@ -31,7 +31,7 @@ export default function FolderCreationModal({ user, show, onClose }) {
                     id="folder"
                     type="text"
                     className="block w-full mb-6"
-                    value="Dossier sans titre"
+                    value={data.name}
                     onChange={(e) => setData('name', e.target.value)}
                     required
                     autoComplete="Dossier sans titre"

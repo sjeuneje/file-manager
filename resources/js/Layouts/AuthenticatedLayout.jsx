@@ -4,23 +4,53 @@ import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
+import PrimaryButton from "@/Components/PrimaryButton.jsx";
 
 export default function Authenticated({ user, header, children }) {
   const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
   return (
-    <>
-      <div className="min-h-screen bg-gray-100">
-        <nav className="bg-white border-b border-gray-100">
-          <div className="max-w-7xl mx-auto px-8">
-            <div className="flex justify-between h-16">
-              <div className="flex">
-                <div className="shrink-0 flex items-center">
-                  <Link href="/dashboard">
+    <div className="flex flex-row border-r-[1px] border-r-gray-900">
+        <div className="w-1/4 bg-gray-900">
+            <div className="flex shrink-0 justify-center items-center h-20 border-b border-gray-800 border-r">
+                <Link href="/dashboard">
                     <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
-                  </Link>
-                </div>
+                </Link>
+            </div>
+            <div>
+                <div className="mt-3 px-3 w-full">
+                    <Dropdown>
+                        <Dropdown.Trigger>
+                            <PrimaryButton
+                                className="flex justify-center items-center gap-1 w-full"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                </svg>
+                                Nouveau
+                            </PrimaryButton>
+                        </Dropdown.Trigger>
 
+                        <Dropdown.Content>
+                            <button
+                                className="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
+                                onClick={() => setShowFolderCreationModal(true)}
+                            >
+                                Nouveau dossier
+                            </button>
+                            <Dropdown.Link>
+                                Importer un fichier
+                            </Dropdown.Link>
+                        </Dropdown.Content>
+                    </Dropdown>
+                </div>
+            </div>
+        </div>
+      <div className="w-full min-h-screen">
+        <nav className="bg-white border-b-[1px] border-b-gray-800">
+          <div className="max-w-7xl">
+            <div className="flex justify-between bg-gray-900 px-8 h-20">
+              <div className="flex">
                 <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                   {/*<button className="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 transition duration-150 ease-in-out focus:outline-none  justify-center gap-1 border-transparent text-gray-500 hover:text-gray-700 hover:border-indigo-400">*/}
                   {/*    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">*/}
@@ -59,9 +89,9 @@ export default function Authenticated({ user, header, children }) {
                     </Dropdown.Trigger>
 
                     <Dropdown.Content>
-                      <Dropdown.Link href={route('profile.edit')}>Profile</Dropdown.Link>
+                      <Dropdown.Link href={route('profile.edit')}>Mon compte</Dropdown.Link>
                       <Dropdown.Link href={route('logout')} method="post" as="button">
-                        Log Out
+                        Se déconnecter
                       </Dropdown.Link>
                     </Dropdown.Content>
                   </Dropdown>
@@ -111,9 +141,9 @@ export default function Authenticated({ user, header, children }) {
               </div>
 
               <div className="mt-3 space-y-1">
-                <ResponsiveNavLink href={route('profile.edit')}>Profile</ResponsiveNavLink>
+                <ResponsiveNavLink href={route('profile.edit')}>Mon compte</ResponsiveNavLink>
                 <ResponsiveNavLink method="post" href={route('logout')} as="button">
-                  Log Out
+                  Se déconnecter
                 </ResponsiveNavLink>
               </div>
             </div>
@@ -128,6 +158,6 @@ export default function Authenticated({ user, header, children }) {
 
         <main>{children}</main>
       </div>
-    </>
+    </div>
   );
 }
