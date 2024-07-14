@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Folder;
 use App\Actions\Folder\CreateFolderWithoutParent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Folder\StoreNewFolderRequest;
+use App\Http\Requests\UpdateFolderRequest;
 use App\Models\Folder\Folder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -27,6 +28,7 @@ class FolderController extends Controller
         return Inertia::render('Dashboard', [
             'folders' => Folder::whereUserRoot(Auth::user()->id)
                 ->with('owner')
+                ->orderBy('created_at', 'desc')
                 ->get()
         ]);
     }
@@ -47,6 +49,17 @@ class FolderController extends Controller
         return redirect()->back()->with([
             'message' => 'Dossier créé avec succès.'
         ]);
+    }
+
+    /**
+     * Update a existing folder in the storage
+     *
+     * @param UpdateFolderRequest $request
+     * @return void
+     */
+    public function update(UpdateFolderRequest $request)
+    {
+        dd($request);
     }
 
     /**

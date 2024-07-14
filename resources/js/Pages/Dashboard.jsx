@@ -22,14 +22,13 @@ export default function Dashboard({ auth, folders }) {
             />}
             <AuthenticatedLayout
                 user={auth.user}
+                header={
+                    <h1 className="text-xl font-bold">Mon Drive</h1>
+                }
             >
-                <Head title="Accueil" />
+                <Head title="Mon stockage" />
 
-                <div className="flex justify-center mt-24">
-                    <h1 className="text-2xl">Bienvenue dans <span className="border-b-2 border-b-gray-900 pb-1">File Manager</span></h1>
-                </div>
-
-                <div className="flex flex-col justify-center max-w-7xl mx-auto px-8 mt-24 pb-24">
+                <div className="flex flex-col justify-center max-w-7xl mx-auto px-8 mt-3 pb-24">
                     {/*{folders.length > 0 && <div className="flex w-full justify-end mb-3">*/}
                     {/*    <PrimaryButton*/}
                     {/*        className="flex items-center gap-1"*/}
@@ -41,6 +40,9 @@ export default function Dashboard({ auth, folders }) {
                     {/*        Nouveau*/}
                     {/*    </PrimaryButton>*/}
                     {/*</div>}*/}
+                    {/*<div>*/}
+                    {/*    <h2 className="text-2xl mb-5">Mon stockage</h2>*/}
+                    {/*</div>*/}
                     <FolderTable
                         folders={folders}
                         setShowFolderCreationModal={setShowFolderCreationModal}

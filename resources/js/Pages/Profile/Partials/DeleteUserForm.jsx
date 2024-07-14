@@ -54,7 +54,7 @@ export default function DeleteUserForm({ className = '' }) {
                 </p>
             </header>
 
-            <DangerButton onClick={confirmUserDeletion}>Supprimer mon compte</DangerButton>
+            <DangerButton onClick={confirmUserDeletion}>Supprimer</DangerButton>
 
             <Modal show={confirmingUserDeletion} onClose={closeModal}>
                 <form onSubmit={deleteUser} className="p-6">
@@ -88,7 +88,7 @@ export default function DeleteUserForm({ className = '' }) {
                         <SecondaryButton onClick={closeModal}>Annuler</SecondaryButton>
 
                         <DangerButton className="ms-3" disabled={processing}>
-                            Supprimer mon compte
+                            Supprimer
                         </DangerButton>
                     </div>
                 </form>

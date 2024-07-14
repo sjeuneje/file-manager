@@ -78,7 +78,7 @@ export default function Login({ status, canResetPassword }) {
                     </label>
                 </div>
 
-                <div className="flex items-center justify-end mt-4">
+                <div className="flex items-center justify-end">
                     {canResetPassword && (
                         <Link
                             href={route('password.request')}
@@ -87,13 +87,15 @@ export default function Login({ status, canResetPassword }) {
                             Mot de passe oublié?
                         </Link>
                     )}
+                </div>
 
-                    <PrimaryButton className="ms-4" disabled={processing}>
+                <div className="flex justify-center mt-4 w-[100%]">
+                    <PrimaryButton className="flex justify-center w-full" disabled={processing}>
                         Se connecter
                     </PrimaryButton>
                 </div>
             </form>
-            <div className="flex flex-row items-center mt-8 mb-5 gap-5">
+            <div className="flex flex-row items-center mt-5 mb-5 gap-5">
                 <div className="w-full h-[2px] bg-gray-100">
                 </div>
                 OU
