@@ -12,9 +12,9 @@ export default function Dashboard({ auth, folders }) {
     const [showFolderUpdateModal, setShowFolderUpdateModal] = useState(false);
 
     /**
-     * The ID of the folder who we need to make actions on. (eg: modify the name)
+     * The folder who we need to make actions on. (eg: modify the name)
      */
-    const [actionFolderId, setActionFolderId] = useState(0);
+    const [actionFolder, setActionFolder] = useState(0);
 
     const onShowFolderCreationModalClose = () => {
         setShowFolderCreationModal(!showFolderCreationModal);
@@ -32,6 +32,7 @@ export default function Dashboard({ auth, folders }) {
                 onClose={onShowFolderCreationModalClose}
             />}
             {showFolderUpdateModal && <FolderUpdateModal
+                folder={actionFolder}
                 user={auth.user}
                 show={showFolderUpdateModal}
                 onClose={onShowFolderUpdateModalClose}
@@ -48,6 +49,8 @@ export default function Dashboard({ auth, folders }) {
                     <FolderTable
                         folders={folders}
                         setShowFolderCreationModal={setShowFolderCreationModal}
+                        setShowFolderUpdateModal={setShowFolderUpdateModal}
+                        setActionFolder={setActionFolder}
                     />
                 </div>
             </AuthenticatedLayout>

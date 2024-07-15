@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Folder;
 
 use App\Actions\Folder\CreateFolderWithoutParent;
+use App\Actions\Folder\UpdateFolderName;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Folder\StoreNewFolderRequest;
 use App\Http\Requests\UpdateFolderRequest;
@@ -52,14 +53,18 @@ class FolderController extends Controller
     }
 
     /**
-     * Update a existing folder in the storage
+     * Update an existing folder in the storage
      *
      * @param UpdateFolderRequest $request
-     * @return void
+     * @return RedirectResponse
      */
-    public function update(UpdateFolderRequest $request)
+    public function update(UpdateFolderRequest $request): RedirectResponse
     {
-        dd($request);
+        (new UpdateFolderName($request))->execute();
+
+        return redirect()->back()->with([
+            'message' => 'Dossier modifié avec succès.'
+        ]);
     }
 
     /**
