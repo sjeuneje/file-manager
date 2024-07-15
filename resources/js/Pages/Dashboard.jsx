@@ -5,12 +5,23 @@ import PrimaryButton from "@/Components/PrimaryButton.jsx";
 import {useState} from "react";
 import FolderCreationModal from "@/Components/Modal/FolderCreationModal.jsx";
 import Dropdown from "@/Components/Dropdown.jsx";
+import FolderUpdateModal from "@/Components/Modal/FolderUpdateModal.jsx";
 
 export default function Dashboard({ auth, folders }) {
     const [showFolderCreationModal, setShowFolderCreationModal] = useState(false);
+    const [showFolderUpdateModal, setShowFolderUpdateModal] = useState(false);
+
+    /**
+     * The ID of the folder who we need to make actions on. (eg: modify the name)
+     */
+    const [actionFolderId, setActionFolderId] = useState(0);
 
     const onShowFolderCreationModalClose = () => {
         setShowFolderCreationModal(!showFolderCreationModal);
+    }
+
+    const onShowFolderUpdateModalClose = () => {
+        setShowFolderUpdateModal(!showFolderUpdateModal);
     }
 
     return (
@@ -19,6 +30,11 @@ export default function Dashboard({ auth, folders }) {
                 user={auth.user}
                 show={showFolderCreationModal}
                 onClose={onShowFolderCreationModalClose}
+            />}
+            {showFolderUpdateModal && <FolderUpdateModal
+                user={auth.user}
+                show={showFolderUpdateModal}
+                onClose={onShowFolderUpdateModalClose}
             />}
             <AuthenticatedLayout
                 user={auth.user}
@@ -29,20 +45,6 @@ export default function Dashboard({ auth, folders }) {
                 <Head title="Mon stockage" />
 
                 <div className="flex flex-col justify-center max-w-7xl mx-auto px-8 mt-3 pb-24">
-                    {/*{folders.length > 0 && <div className="flex w-full justify-end mb-3">*/}
-                    {/*    <PrimaryButton*/}
-                    {/*        className="flex items-center gap-1"*/}
-                    {/*        onClick={() => setShowFolderCreationModal(true)}*/}
-                    {/*    >*/}
-                    {/*        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">*/}
-                    {/*            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />*/}
-                    {/*        </svg>*/}
-                    {/*        Nouveau*/}
-                    {/*    </PrimaryButton>*/}
-                    {/*</div>}*/}
-                    {/*<div>*/}
-                    {/*    <h2 className="text-2xl mb-5">Mon stockage</h2>*/}
-                    {/*</div>*/}
                     <FolderTable
                         folders={folders}
                         setShowFolderCreationModal={setShowFolderCreationModal}

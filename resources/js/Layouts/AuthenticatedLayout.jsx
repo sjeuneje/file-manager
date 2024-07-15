@@ -82,8 +82,6 @@ export default function Authenticated({ user, header, children }) {
         setShowFolderCreationModal(!showFolderCreationModal);
     }
 
-    console.log(showSidebar)
-
   return (
       <>
           {showFolderCreationModal && <FolderCreationModal
@@ -92,7 +90,7 @@ export default function Authenticated({ user, header, children }) {
               onClose={onShowFolderCreationModalClose}
           />}
           <div className="flex flex-row">
-              <div className={showSidebar ? "absolute top-0 left-0 z-50 block w-full bg-white border-r-[1px] border-r-gray-100" : "hidden md:block w-[400px] bg-white border-r-[1px] border-r-gray-100"}>
+              <div className={showSidebar ? "h-screen overflow-y-hidden absolute top-0 left-0 z-50 block w-full bg-white border-r-[1px] border-r-gray-100" : "hidden md:block w-[400px] bg-white border-r-[1px] border-r-gray-100"}>
                   <div className="flex shrink-0 md:justify-center items-center h-24 border-b-[1px] border-b-gray-100">
                       <Link href="/dashboard" className={"pl-8 md:pl-0"}>
                           <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />

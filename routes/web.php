@@ -21,6 +21,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('', [FolderController::class, 'index'])->name('dashboard');
         Route::post('folders', [FolderController::class, 'store'])->name('dashboard.folders.create');
         Route::delete('folders', [FolderController::class, 'destroy'])->name('dashboard.folders.delete');
+        Route::patch('folders', [FolderController::class, 'update'])->name('dashboard.folders.update');
     });
 });
 

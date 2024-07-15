@@ -1,5 +1,6 @@
 import {router, useForm, usePage} from "@inertiajs/react";
 import DeleteFolder from "@/Components/Table/Folder/Partials/DeleteFolder.jsx";
+import UpdateFolderName from "@/Components/Table/Folder/Partials/UpdateFolderName.jsx";
 
 export default function FolderTable({ folders, setShowFolderCreationModal }) {
     const user = usePage().props.auth.user;
@@ -7,7 +8,7 @@ export default function FolderTable({ folders, setShowFolderCreationModal }) {
     if (folders.length < 1) {
         return (
             <div className="flex flex-col justify-center items-center w-full">
-                <h3 className="text-center mb-2">Il semblerait que votre espace de stockage soit vide...</h3>
+                <h3 className="text-center mb-2 mt-12">Il semblerait que votre espace de stockage soit vide...</h3>
                 <div>
                     <button
                         type="submit"
@@ -89,6 +90,10 @@ export default function FolderTable({ folders, setShowFolderCreationModal }) {
                                                         </svg>
                                                         <span className="sr-only">Download</span>
                                                     </button>
+                                                    <UpdateFolderName
+                                                        folderId={folder.id}
+                                                        userId={user.id}
+                                                    />
                                                     <DeleteFolder
                                                         folderId={folder.id}
                                                         userId={user.id}
