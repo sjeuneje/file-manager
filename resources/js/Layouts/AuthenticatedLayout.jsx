@@ -82,6 +82,11 @@ export default function Authenticated({ user, header, children }) {
         setShowFolderCreationModal(!showFolderCreationModal);
     }
 
+    const handleFileUpload = (e) => {
+        e.preventDefault();
+        console.log('pass');
+    }
+
   return (
       <>
           {showFolderCreationModal && <FolderCreationModal
@@ -117,9 +122,18 @@ export default function Authenticated({ user, header, children }) {
                                   >
                                       Nouveau dossier
                                   </button>
-                                  <Dropdown.Link>
+                                  <label
+                                      className="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out cursor-pointer"
+                                      htmlFor="file-upload"
+                                  >
                                       Importer un fichier
-                                  </Dropdown.Link>
+                                  </label>
+                                  <input
+                                      id="file-upload"
+                                      type="file"
+                                      className="hidden"
+                                      onChangeCapture={handleFileUpload}
+                                  />
                               </Dropdown.Content>
                           </Dropdown>
                       </div>

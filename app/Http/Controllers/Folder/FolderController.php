@@ -41,7 +41,7 @@ class FolderController extends Controller
      * @param StoreNewFolderRequest $request
      * @return RedirectResponse
      */
-    public function store(StoreNewFolderRequest $request)
+    public function store(StoreNewFolderRequest $request): RedirectResponse
     {
         if (!$request->parent_id) {
             (new CreateFolderWithoutParent($request))->execute();

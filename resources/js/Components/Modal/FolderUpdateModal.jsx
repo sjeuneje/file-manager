@@ -23,7 +23,7 @@ export default function FolderUpdateModal({ user, show, onClose, folder }) {
             onClose={onClose}
         >
             <form onSubmit={submit} className="w-full px-5 py-5">
-                <h1 className="text-2xl mb-6">Nouveau dossier</h1>
+                <h1 className="text-2xl mb-6">Modifier dossier</h1>
                 <TextInput
                     id="folder"
                     type="text"
