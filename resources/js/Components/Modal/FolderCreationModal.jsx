@@ -2,10 +2,10 @@ import TextInput from "@/Components/TextInput.jsx";
 import Modal from "@/Components/Modal/Modal.jsx";
 import {useForm} from "@inertiajs/react";
 
-export default function FolderCreationModal({ user, show, onClose }) {
+export default function FolderCreationModal({ user, show, onClose, parentId }) {
     const { data, setData, post, errors, processing } = useForm({
         user_id: user.id,
-        parent_id: null,
+        parent_id: parentId,
         name: 'Dossier sans titre'
     });
 

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\File\FileController;
 use App\Http\Controllers\Folder\FolderController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -18,10 +20,17 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::prefix('dashboard')->group(function () {
-        Route::get('', [FolderController::class, 'index'])->name('dashboard');
-        Route::post('folders', [FolderController::class, 'store'])->name('dashboard.folders.create');
-        Route::delete('folders', [FolderController::class, 'destroy'])->name('dashboard.folders.delete');
-        Route::patch('folders', [FolderController::class, 'update'])->name('dashboard.folders.update');
+        Route::get('', [DashboardController::class, 'index'])->name('dashboard');
+
+        Route::prefix('folders')->group(function () {
+            Route::post('', [FolderController::class, 'store'])->name('dashboard.folders.create');
+            Route::delete('', [FolderController::class, 'destroy'])->name('dashboard.folders.delete');
+            Route::patch('', [FolderController::class, 'update'])->name('dashboard.folders.update');
+        });
+
+        Route::prefix('files')->group(function () {
+            Route::post('', [FileController::class, 'store'])->name('dashboard.files.create');
+        });
     });
 });
 

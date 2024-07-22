@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.fileuploader--adddons {
+    justify-content: center !important;
+    max-width: 100% !important;
+    height: 200px !important;
+    outline: none !important;
+    margin-bottom: 50px !important;
+    margin-top: 50px !important;
+}
+
+.fileuploader--adddons div {
+    flex-grow: initial !important;
+}
+
+.fileuploader--adddons div span {
+    font-size: 18px;
+    --tw-text-opacity: 1 !important;
+    color: rgb(79 70 229 / var(--tw-text-opacity)) !important;
+    font-weight: 500 !important;
+}
+
+.fileuploader--adddons svg {
+    display: none !important;
+}

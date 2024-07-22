@@ -2,14 +2,19 @@ import FolderTable from '@/Components/Table/Folder/FolderTable.jsx';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import {Head, router, useForm} from '@inertiajs/react';
 import PrimaryButton from "@/Components/PrimaryButton.jsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import FolderCreationModal from "@/Components/Modal/FolderCreationModal.jsx";
 import Dropdown from "@/Components/Dropdown.jsx";
 import FolderUpdateModal from "@/Components/Modal/FolderUpdateModal.jsx";
+import {useParams} from "react-router";
+import {useSearchParams} from "react-router-dom";
+import getParentId from "@/Utils/urls.js";
 
-export default function Dashboard({ auth, folders }) {
+export default function Dashboard({ auth, folders, files }) {
     const [showFolderCreationModal, setShowFolderCreationModal] = useState(false);
     const [showFolderUpdateModal, setShowFolderUpdateModal] = useState(false);
+
+    const parentId = getParentId();
 
     /**
      * The folder who we need to make actions on. (eg: modify the name)
@@ -30,6 +35,7 @@ export default function Dashboard({ auth, folders }) {
                 user={auth.user}
                 show={showFolderCreationModal}
                 onClose={onShowFolderCreationModalClose}
+                parentId={parentId}
             />}
             {showFolderUpdateModal && <FolderUpdateModal
                 folder={actionFolder}
@@ -48,6 +54,7 @@ export default function Dashboard({ auth, folders }) {
                 <div className="flex flex-col justify-center max-w-7xl mx-auto px-8 mt-3 pb-24">
                     <FolderTable
                         folders={folders}
+                        files={files}
                         setShowFolderCreationModal={setShowFolderCreationModal}
                         setShowFolderUpdateModal={setShowFolderUpdateModal}
                         setActionFolder={setActionFolder}

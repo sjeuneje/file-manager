@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-class CreateFolderWithoutParent implements BaseActionInterface
+class CreateFolder implements BaseActionInterface
 {
     private StoreNewFolderRequest $request;
 
@@ -21,7 +21,16 @@ class CreateFolderWithoutParent implements BaseActionInterface
 
     public function execute(): void
     {
-        $generatedFolderPath = FolderHelper::generateFolderPath($this->request->user_id);
+        if (!empty($this->request->parent_id)) {
+            $parentFolder = Folder::firstWhere('id', $this->request->parent_id);
+
+            $generatedFolderPath = FolderHelper::generateFolderPath(
+                $this->request->user_id,
+                $parentFolder->path
+            );
+        } else {
+            $generatedFolderPath = FolderHelper::generateFolderPath($this->request->user_id);
+        }
 
         try {
             Storage::makeDirectory($generatedFolderPath);

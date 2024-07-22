@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Folder;
 
-use App\Actions\Folder\CreateFolderWithoutParent;
+use App\Actions\Folder\CreateFolder;
+use App\Actions\Folder\CreateFolderWithParent;
 use App\Actions\Folder\UpdateFolderName;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Folder\StoreNewFolderRequest;
@@ -20,22 +21,6 @@ use Inertia\Response;
 class FolderController extends Controller
 {
     /**
-     * List all folders of the logged user.
-     *
-     * @return Response
-     */
-    public function index(): Response
-    {
-        return Inertia::render('Dashboard', [
-            'folders' => Folder::whereUserRoot(Auth::user()->id)
-                ->with('owner')
-                ->orderBy('created_at', 'desc')
-                ->get()
-        ]);
-    }
-
-
-    /**
      * Store a new folder in the storage.
      *
      * @param StoreNewFolderRequest $request
@@ -43,9 +28,7 @@ class FolderController extends Controller
      */
     public function store(StoreNewFolderRequest $request): RedirectResponse
     {
-        if (!$request->parent_id) {
-            (new CreateFolderWithoutParent($request))->execute();
-        }
+        (new CreateFolder($request))->execute();
 
         return redirect()->back()->with([
             'message' => 'Dossier créé avec succès.'
@@ -89,9 +72,9 @@ class FolderController extends Controller
             ]);
         }
 
-        $deleted = Storage::deleteDirectory($folder->path);
-
-        abort_if(!$deleted, 400, 'Un problème est survenu lors de la suppression du dossier.');
+//        $deleted = Storage::deleteDirectory($folder->path);
+//
+//        abort_if(!$deleted, 400, 'Un problème est survenu lors de la suppression du dossier.');
 
         $folder->delete();
 

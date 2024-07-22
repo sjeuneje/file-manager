@@ -22,8 +22,8 @@ class StoreNewFolderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required|exists:App\Models\User,id',
-            'parent_id' => 'nullable|exists:App\Models\Folder,id',
+            'user_id' => 'required|exists:users,id',
+            'parent_id' => 'nullable|exists:folders,id',
             'name' => 'required|string|max:60'
         ];
     }

@@ -6,6 +6,8 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import {Link, router} from '@inertiajs/react';
 import PrimaryButton from "@/Components/PrimaryButton.jsx";
 import FolderCreationModal from "@/Components/Modal/FolderCreationModal.jsx";
+import FileDropModal from "@/Components/Modal/FileDropModal.jsx";
+import getParentId from "@/Utils/urls.js";
 
 const mainElements = [
     {
@@ -48,7 +50,7 @@ const storageElements = [
         icon: <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
             <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
         </svg>,
-        text: "Espace de stockage",
+        text: "Gestion du stockage",
         href: "/storage"
     }
 ];
@@ -77,14 +79,16 @@ export default function Authenticated({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
     const [showSidebar, setShowSidebar] = useState(false);
     const [showFolderCreationModal, setShowFolderCreationModal] = useState(false);
+    const [showModalFileDrop, setShowModalFileDrop] = useState(false);
+
+    const parentId = getParentId();
 
     const onShowFolderCreationModalClose = () => {
         setShowFolderCreationModal(!showFolderCreationModal);
     }
 
-    const handleFileUpload = (e) => {
-        e.preventDefault();
-        console.log('pass');
+    const onShowModalFileDropClose = () => {
+        setShowModalFileDrop(!showModalFileDrop);
     }
 
   return (
@@ -93,9 +97,16 @@ export default function Authenticated({ user, header, children }) {
               user={user}
               show={showFolderCreationModal}
               onClose={onShowFolderCreationModalClose}
+              parentId={parentId}
+          />}
+          {showModalFileDrop && <FileDropModal
+              show={showModalFileDrop}
+              onClose={onShowModalFileDropClose}
+              userId={user.id}
+              parentId={parentId}
           />}
           <div className="flex flex-row">
-              <div className={showSidebar ? "h-screen overflow-y-hidden absolute top-0 left-0 z-50 block w-full bg-white border-r-[1px] border-r-gray-100" : "hidden md:block w-[400px] bg-white border-r-[1px] border-r-gray-100"}>
+              <div className={showSidebar ? "h-screen overflow-y-hidden absolute top-0 left-0 z-50 block w-full bg-white border-r-[1px] border-r-gray-100" : "hidden md:block md:w-[300px] lg:w-[400px] bg-white border-r-[1px] border-r-gray-100"}>
                   <div className="flex shrink-0 md:justify-center items-center h-24 border-b-[1px] border-b-gray-100">
                       <Link href="/dashboard" className={"pl-8 md:pl-0"}>
                           <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
@@ -122,18 +133,12 @@ export default function Authenticated({ user, header, children }) {
                                   >
                                       Nouveau dossier
                                   </button>
-                                  <label
-                                      className="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out cursor-pointer"
-                                      htmlFor="file-upload"
+                                  <button
+                                      className="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
+                                      onClick={() => setShowModalFileDrop(true)}
                                   >
-                                      Importer un fichier
-                                  </label>
-                                  <input
-                                      id="file-upload"
-                                      type="file"
-                                      className="hidden"
-                                      onChangeCapture={handleFileUpload}
-                                  />
+                                      Importer des fichiers
+                                  </button>
                               </Dropdown.Content>
                           </Dropdown>
                       </div>

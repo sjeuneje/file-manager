@@ -20,6 +20,8 @@
         "vite": "^5.0"
     },
     "dependencies": {
-        "react-router": "^6.23.1"
+        "react-drag-drop-files": "^2.3.10",
+        "react-router": "^6.23.1",
+        "react-router-dom": "^6.25.1"
     }
 }
