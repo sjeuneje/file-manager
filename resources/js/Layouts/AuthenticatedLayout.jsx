@@ -7,7 +7,7 @@ import {Link, router} from '@inertiajs/react';
 import PrimaryButton from "@/Components/PrimaryButton.jsx";
 import FolderCreationModal from "@/Components/Modal/FolderCreationModal.jsx";
 import FileDropModal from "@/Components/Modal/FileDropModal.jsx";
-import getParentId from "@/Utils/urls.js";
+import { getParentId } from "@/Utils/urls.js";
 
 const mainElements = [
     {

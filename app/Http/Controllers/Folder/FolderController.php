@@ -72,10 +72,6 @@ class FolderController extends Controller
             ]);
         }
 
-//        $deleted = Storage::deleteDirectory($folder->path);
-//
-//        abort_if(!$deleted, 400, 'Un problème est survenu lors de la suppression du dossier.');
-
         $folder->delete();
 
         return redirect()->back()->with([
@@ -85,4 +81,9 @@ class FolderController extends Controller
                 ->get()
         ]);
     }
+
+//    public function ()
+//    {
+//
+//    }
 }

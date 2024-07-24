@@ -29,7 +29,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
 
         Route::prefix('files')->group(function () {
-            Route::post('', [FileController::class, 'store'])->name('dashboard.files.create');
+            Route::post('', [FileController::class, 'store'])
+                ->name('dashboard.files.create')
+                ->middleware('throttle:10,1');
+
+            Route::delete('', [FileController::class, 'softDelete'])->name('dashboard.files.soft_delete');
         });
     });
 });

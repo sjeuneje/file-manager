@@ -2,9 +2,34 @@ import {router, useForm, usePage} from "@inertiajs/react";
 import DeleteFolder from "@/Components/Table/Folder/Partials/DeleteFolder.jsx";
 import UpdateFolderName from "@/Components/Table/Folder/Partials/UpdateFolderName.jsx";
 import {useParams} from "react-router";
+import DeleteFile from "@/Components/File/DeleteFile.jsx";
 
 export default function FolderTable({ folders, files, setShowFolderCreationModal, setShowFolderUpdateModal, setActionFolder }) {
     const user = usePage().props.auth.user;
+
+    const breadcrumb = JSON.parse(localStorage.getItem('breadcrumb'));
+
+    if (!breadcrumb) {
+        localStorage.setItem('breadcrumb', JSON.stringify([]));
+    }
+
+    if (!window.location.href.includes('parent_id')) {
+        localStorage.setItem('breadcrumb', JSON.stringify([]));
+    }
+
+
+    const handleFolderNavigation = (folder) => {
+        if (breadcrumb) {
+            breadcrumb.push({
+                name: folder.name,
+                id: folder.id
+            });
+
+            localStorage.setItem('breadcrumb', JSON.stringify(breadcrumb));
+        }
+
+        window.location.search = "parent_id=" + folder.id;
+    }
 
     if (folders.length < 1 && files.length < 1) {
         return (
@@ -52,14 +77,14 @@ export default function FolderTable({ folders, files, setShowFolderCreationModal
                                 {folders.map((folder) => {
                                     return (
                                         <tr
-                                            onDoubleClick={() => window.location.search = "parent_id=" + folder.id}
+                                            onDoubleClick={() => handleFolderNavigation(folder)}
                                             key={folder.id}
                                             className="cursor-pointer border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted hover:bg-indigo-100 transition ease-in-out duration-150"
                                         >
                                             <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
                                                 <div className="flex flex-row items-center gap-2">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z" />
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-5 text-indigo-600">
+                                                        <path d="M19.5 21a3 3 0 0 0 3-3v-4.5a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3V18a3 3 0 0 0 3 3h15ZM1.5 10.146V6a3 3 0 0 1 3-3h5.379a2.25 2.25 0 0 1 1.59.659l2.122 2.121c.14.141.331.22.53.22H19.5a3 3 0 0 1 3 3v1.146A4.483 4.483 0 0 0 19.5 9h-15a4.483 4.483 0 0 0-3 1.146Z" />
                                                     </svg>
                                                     <p className="max-w-[300px] overflow-hidden float-left text-ellipsis whitespace-nowrap">
                                                         {folder.name}
@@ -116,8 +141,9 @@ export default function FolderTable({ folders, files, setShowFolderCreationModal
                                         <tr key={file.id} className="cursor-pointer border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted hover:bg-indigo-100 transition ease-in-out duration-150">
                                             <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
                                                 <div className="flex flex-row items-center gap-2">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-5 text-indigo-400">
+                                                        <path d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0 0 16.5 9h-1.875a1.875 1.875 0 0 1-1.875-1.875V5.25A3.75 3.75 0 0 0 9 1.5H5.625Z" />
+                                                        <path d="M12.971 1.816A5.23 5.23 0 0 1 14.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 0 1 3.434 1.279 9.768 9.768 0 0 0-6.963-6.963Z" />
                                                     </svg>
                                                     <p className="max-w-[300px] overflow-hidden float-left text-ellipsis whitespace-nowrap">
                                                         {file.name}
@@ -129,25 +155,10 @@ export default function FolderTable({ folders, files, setShowFolderCreationModal
                                             <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{(file.size / (1024 * 1024)).toFixed(2)} MB</td>
                                             <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
                                                 <div className="flex items-center">
-                                                    <button className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10 hover:bg-indigo-300 rounded-full">
-                                                        <svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            width="24"
-                                                            height="24"
-                                                            viewBox="0 0 24 24"
-                                                            fill="none"
-                                                            stroke="currentColor"
-                                                            strokeWidth="2"
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                            className="h-4 w-4"
-                                                        >
-                                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                                                            <polyline points="7 10 12 15 17 10"></polyline>
-                                                            <line x1="12" x2="12" y1="15" y2="3"></line>
-                                                        </svg>
-                                                        <span className="sr-only">Download</span>
-                                                    </button>
+                                                    <DeleteFile
+                                                        fileId={file.id}
+                                                        userId={user.id}
+                                                    />
                                                 </div>
                                             </td>
                                         </tr>

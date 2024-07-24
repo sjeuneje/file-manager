@@ -8,7 +8,8 @@ import Dropdown from "@/Components/Dropdown.jsx";
 import FolderUpdateModal from "@/Components/Modal/FolderUpdateModal.jsx";
 import {useParams} from "react-router";
 import {useSearchParams} from "react-router-dom";
-import getParentId from "@/Utils/urls.js";
+import { getParentId } from "@/Utils/urls.js";
+import Breadcrumb from "@/Components/Breadcrumb.jsx";
 
 export default function Dashboard({ auth, folders, files }) {
     const [showFolderCreationModal, setShowFolderCreationModal] = useState(false);
@@ -45,9 +46,7 @@ export default function Dashboard({ auth, folders, files }) {
             />}
             <AuthenticatedLayout
                 user={auth.user}
-                header={
-                    <h1 className="text-xl font-bold">Mon Drive</h1>
-                }
+                header={<Breadcrumb />}
             >
                 <Head title="Mon stockage" />
 
