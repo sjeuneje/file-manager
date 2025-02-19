@@ -1,19 +1,17 @@
 import FolderTable from '@/Components/Table/Folder/FolderTable.jsx';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import {Head, router, useForm} from '@inertiajs/react';
-import PrimaryButton from "@/Components/PrimaryButton.jsx";
+import { Head } from '@inertiajs/react';
 import {useEffect, useState} from "react";
 import FolderCreationModal from "@/Components/Modal/FolderCreationModal.jsx";
-import Dropdown from "@/Components/Dropdown.jsx";
 import FolderUpdateModal from "@/Components/Modal/FolderUpdateModal.jsx";
-import {useParams} from "react-router";
-import {useSearchParams} from "react-router-dom";
 import { getParentId } from "@/Utils/urls.js";
 import Breadcrumb from "@/Components/Breadcrumb.jsx";
+import FileUpdateNameModal from "@/Components/Modal/FileUpdateNameModal.jsx";
 
 export default function Dashboard({ auth, folders, files }) {
     const [showFolderCreationModal, setShowFolderCreationModal] = useState(false);
     const [showFolderUpdateModal, setShowFolderUpdateModal] = useState(false);
+    const [showFileUpdateNameModal, setShowFileUpdateNameModal] = useState(false);
 
     const parentId = getParentId();
 
@@ -22,13 +20,15 @@ export default function Dashboard({ auth, folders, files }) {
      */
     const [actionFolder, setActionFolder] = useState(0);
 
-    const onShowFolderCreationModalClose = () => {
-        setShowFolderCreationModal(!showFolderCreationModal);
-    }
+    /**
+     * The file we need to make actions on.
+     * The ID of the file.
+     */
+    const [actionFile, setActionFile] = useState(0);
 
-    const onShowFolderUpdateModalClose = () => {
-        setShowFolderUpdateModal(!showFolderUpdateModal);
-    }
+    const onShowFolderCreationModalClose = () => setShowFolderCreationModal(!showFolderCreationModal);
+    const onShowFolderUpdateModalClose = () => setShowFolderUpdateModal(!showFolderUpdateModal);
+    const onShowFileUpdateNameModalClose = () => setShowFileUpdateNameModal(!showFileUpdateNameModal);
 
     return (
         <>
@@ -44,6 +44,12 @@ export default function Dashboard({ auth, folders, files }) {
                 show={showFolderUpdateModal}
                 onClose={onShowFolderUpdateModalClose}
             />}
+            {showFileUpdateNameModal && <FileUpdateNameModal
+                file={actionFile}
+                user={auth.user}
+                show={showFileUpdateNameModal}
+                onClose={onShowFileUpdateNameModalClose}
+            />}
             <AuthenticatedLayout
                 user={auth.user}
                 header={<Breadcrumb />}
@@ -56,7 +62,9 @@ export default function Dashboard({ auth, folders, files }) {
                         files={files}
                         setShowFolderCreationModal={setShowFolderCreationModal}
                         setShowFolderUpdateModal={setShowFolderUpdateModal}
+                        setShowFileUpdateNameModal={setShowFileUpdateNameModal}
                         setActionFolder={setActionFolder}
+                        setActionFile={setActionFile}
                     />
                 </div>
             </AuthenticatedLayout>

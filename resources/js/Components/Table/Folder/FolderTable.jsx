@@ -2,9 +2,18 @@ import {router, useForm, usePage} from "@inertiajs/react";
 import DeleteFolder from "@/Components/Table/Folder/Partials/DeleteFolder.jsx";
 import UpdateFolderName from "@/Components/Table/Folder/Partials/UpdateFolderName.jsx";
 import {useParams} from "react-router";
-import DeleteFile from "@/Components/File/DeleteFile.jsx";
+import DeleteFile from "@/Components/Table/File/DeleteFile.jsx";
+import UpdateFileName from "@/Components/Table/File/UpdateFileName.jsx";
 
-export default function FolderTable({ folders, files, setShowFolderCreationModal, setShowFolderUpdateModal, setActionFolder }) {
+export default function FolderTable({
+    folders,
+    files,
+    setShowFolderCreationModal,
+    setShowFolderUpdateModal,
+    setShowFileUpdateNameModal,
+    setActionFolder,
+    setActionFile
+}) {
     const user = usePage().props.auth.user;
 
     const breadcrumb = JSON.parse(localStorage.getItem('breadcrumb'));
@@ -155,6 +164,11 @@ export default function FolderTable({ folders, files, setShowFolderCreationModal
                                             <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{(file.size / (1024 * 1024)).toFixed(2)} MB</td>
                                             <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
                                                 <div className="flex items-center">
+                                                    <UpdateFileName
+                                                        file={file}
+                                                        setActionFile={setActionFile}
+                                                        setShowFileUpdateNameModal={setShowFileUpdateNameModal}
+                                                    />
                                                     <DeleteFile
                                                         fileId={file.id}
                                                         userId={user.id}
