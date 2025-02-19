@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Folder\FolderHelper;
 use App\Models\File\File;
 use App\Models\Folder\Folder;
 use Illuminate\Http\Request;
@@ -22,7 +23,11 @@ class DashboardController extends Controller
                     $q->whereNull('parent_id');
                 })
                 ->orderBy('created_at', 'desc')
-                ->get(),
+                ->get()
+                ->map(function ($folder) {
+                    $folder->size = (new FolderHelper())->getFolderSize($folder);
+                    return $folder;
+                }),
             'files' => File::where('user_id', Auth::user()->id)
                 ->with('owner')
                 ->when(!empty($request->parent_id), function ($q) use ($request) {

@@ -3,11 +3,9 @@
 namespace App\Actions\File;
 
 use App\Actions\BaseActionInterface;
-use App\Helpers\FolderHelper;
-use App\Http\Requests\StoreFilesRequest;
+use App\Helpers\Folder\FolderHelper;
 use App\Jobs\StoreImportedFile;
 use App\Models\File\File;
-use Symfony\Component\HttpFoundation\FileBag;
 
 class DispatchImportedFiles implements BaseActionInterface
 {
@@ -29,7 +27,7 @@ class DispatchImportedFiles implements BaseActionInterface
 
             $tempFilePath = $importedFile->store('temp');
 
-            $file->path = FolderHelper::generateFolderPath($this->userId, "", $importedFile->getClientOriginalExtension());
+            $file->path = (new FolderHelper)->generateFolderPath($this->userId, "", $importedFile->getClientOriginalExtension());
 
             $file->save();
 

@@ -3,12 +3,11 @@
 namespace App\Actions\Folder;
 
 use App\Actions\BaseActionInterface;
-use App\Helpers\FolderHelper;
+use App\Helpers\Folder\FolderHelper;
 use App\Http\Requests\Folder\StoreNewFolderRequest;
 use App\Models\Folder\Folder;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class CreateFolder implements BaseActionInterface
 {
@@ -24,12 +23,12 @@ class CreateFolder implements BaseActionInterface
         if (!empty($this->request->parent_id)) {
             $parentFolder = Folder::firstWhere('id', $this->request->parent_id);
 
-            $generatedFolderPath = FolderHelper::generateFolderPath(
+            $generatedFolderPath = (new FolderHelper)->generateFolderPath(
                 $this->request->user_id,
                 $parentFolder->path
             );
         } else {
-            $generatedFolderPath = FolderHelper::generateFolderPath($this->request->user_id);
+            $generatedFolderPath = (new FolderHelper)->generateFolderPath($this->request->user_id);
         }
 
         try {
