@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\File;
 
 use App\Actions\File\DispatchImportedFiles;
+use App\Actions\File\UpdateFileName;
+use App\Actions\Folder\UpdateFolderName;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreFilesRequest;
+use App\Http\Requests\UpdateFileNameRequest;
 use App\Models\File\File;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -17,7 +20,7 @@ class FileController extends Controller
      * @param StoreFilesRequest $request
      * @return RedirectResponse
      */
-    public function store(StoreFilesRequest $request)
+    public function store(StoreFilesRequest $request): RedirectResponse
     {
         (new DispatchImportedFiles(
             $request->allFiles()['files'],
@@ -27,6 +30,15 @@ class FileController extends Controller
 
         return redirect()->back()->with([
             'message' => 'Vos fichiers sont en cours d\'importation.'
+        ]);
+    }
+
+    public function updateName(UpdateFileNameRequest $request)
+    {
+        (new UpdateFileName($request))->execute();
+
+        return redirect()->back()->with([
+            'message' => 'Dossier modifié avec succès.'
         ]);
     }
 

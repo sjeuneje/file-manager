@@ -12,7 +12,7 @@ export default function FileUpdateNameModal({ user, show, onClose, file }) {
     const submit = (e) => {
         e.preventDefault();
 
-        patch(route('dashboard.files.update'));
+        patch(route('dashboard.files.update_name'));
 
         onClose();
     }

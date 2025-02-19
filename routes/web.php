@@ -33,6 +33,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 ->name('dashboard.files.create')
                 ->middleware('throttle:10,1');
 
+            Route::patch('name', [FileController::class, 'updateName'])->name('dashboard.files.update_name');
+
             Route::delete('', [FileController::class, 'softDelete'])->name('dashboard.files.soft_delete');
         });
     });
