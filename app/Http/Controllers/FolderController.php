@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Actions\Folder\CreateFolder;
 use App\Actions\Folder\CreateFolderWithParent;
 use App\Actions\Folder\UpdateFolderName;
+use App\Http\Requests\DownloadFolderRequest;
 use App\Http\Requests\Folder\StoreNewFolderRequest;
 use App\Http\Requests\UpdateFolderRequest;
 use App\Models\Folder\Folder;
@@ -74,10 +75,5 @@ class FolderController extends Controller
                 ->with('owner')
                 ->get()
         ]);
-    }
-
-    public function download(DownloadFolderRequest $request)
-    {
-
     }
 }

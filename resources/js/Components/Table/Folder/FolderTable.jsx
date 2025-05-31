@@ -109,7 +109,7 @@ export default function FolderTable({
                                                     <DownloadFolder
                                                         folder={folder}
                                                         setActionFolder={setActionFolder}
-                                                        // setShowFolderUpdateModal={}
+                                                        user={user}
                                                     />
                                                     <UpdateFolderName
                                                         folder={folder}

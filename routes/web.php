@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\FolderController;
 use App\Http\Controllers\ProfileController;
@@ -28,6 +29,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::patch('name', [FileController::class, 'updateName'])->name('dashboard.files.update_name');
 
             Route::delete('', [FileController::class, 'softDelete'])->name('dashboard.files.soft_delete');
+        });
+
+        Route::prefix('download')->group(function () {
+            Route::post('folders', [DownloadController::class, 'downloadFolder'])->name('download.folders');
         });
     });
 });

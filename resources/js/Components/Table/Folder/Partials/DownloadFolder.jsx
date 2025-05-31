@@ -1,11 +1,24 @@
+import {useForm} from "@inertiajs/react";
+
 export default function DownloadFolder({
     folder,
-    setActionFolder
+    setActionFolder,
+    user
 }) {
+
+    const { data, setData, post, errors, processing } = useForm({
+        id: folder.id,
+        user_id: user.id
+    });
+
     const sendDownloadRequest = (e) => {
         e.preventDefault();
 
         console.log(folder);
+
+        e.preventDefault();
+
+        post(route('download.folders'));
     }
 
 
