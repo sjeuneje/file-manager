@@ -1,22 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Folder;
+namespace App\Http\Controllers;
 
 use App\Actions\Folder\CreateFolder;
 use App\Actions\Folder\CreateFolderWithParent;
 use App\Actions\Folder\UpdateFolderName;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Folder\StoreNewFolderRequest;
 use App\Http\Requests\UpdateFolderRequest;
 use App\Models\Folder\Folder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
-use Inertia\Inertia;
-use Inertia\Response;
 
 class FolderController extends Controller
 {
@@ -82,8 +76,8 @@ class FolderController extends Controller
         ]);
     }
 
-//    public function ()
-//    {
-//
-//    }
+    public function download(DownloadFolderRequest $request)
+    {
+
+    }
 }

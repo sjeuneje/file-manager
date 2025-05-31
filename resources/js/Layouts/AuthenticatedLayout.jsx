@@ -238,7 +238,7 @@ export default function Authenticated({ user, header, children }) {
               </div>
               <div className="w-full min-h-screen bg-gray-50">
                   <nav className="bg-white border-b-[1px] border-b-gray-100">
-                      <div className="max-w-7xl">
+                      <div className="">
                           <div className="flex justify-between px-8 h-24">
                               <div className="flex">
                                   <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">

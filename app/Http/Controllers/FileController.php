@@ -1,11 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\File;
+namespace App\Http\Controllers;
 
 use App\Actions\File\DispatchImportedFiles;
 use App\Actions\File\UpdateFileName;
-use App\Actions\Folder\UpdateFolderName;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreFilesRequest;
 use App\Http\Requests\UpdateFileNameRequest;
 use App\Models\File\File;
