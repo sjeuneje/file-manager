@@ -2,19 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\Folder\CreateFolder;
-use App\Actions\Folder\CreateFolderWithParent;
-use App\Actions\Folder\UpdateFolderName;
-use App\Http\Requests\DownloadFolderRequest;
+use App\Helpers\Folder\FolderHelper;
 use App\Http\Requests\Folder\StoreNewFolderRequest;
 use App\Http\Requests\UpdateFolderRequest;
 use App\Models\Folder\Folder;
+use App\Services\FolderService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class FolderController extends Controller
 {
+    private FolderService $folderService;
+
+    public function __construct()
+    {
+        $this->folderService = new FolderService(new FolderHelper());
+    }
+
     /**
      * Store a new folder in the storage.
      *
@@ -23,7 +28,11 @@ class FolderController extends Controller
      */
     public function store(StoreNewFolderRequest $request): RedirectResponse
     {
-        (new CreateFolder($request))->execute();
+        $this->folderService->create(
+            $request->name,
+            $request->user_id,
+            $request->parent_id
+        );
 
         return redirect()->back()->with([
             'message' => 'Dossier créé avec succès.'
@@ -38,7 +47,10 @@ class FolderController extends Controller
      */
     public function update(UpdateFolderRequest $request): RedirectResponse
     {
-        (new UpdateFolderName($request))->execute();
+        $this->folderService->rename(
+            $request->id,
+            $request->name
+        );
 
         return redirect()->back()->with([
             'message' => 'Dossier modifié avec succès.'

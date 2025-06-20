@@ -2,16 +2,16 @@
 
 namespace App\Helpers\Folder;
 
-use App\Models\File\File;
 use App\Models\Folder\Folder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
 
-class FolderHelper extends FolderChildrenFinder
+class FolderHelper
 {
-    public function getFolderChidren(Folder $folder)
+    private FolderChildrenFinder $childrenFinder;
+
+    public function __construct()
     {
-        return $this->getFolderChildren($folder);
+        $this->childrenFinder = new FolderChildrenFinder();
     }
 
     public function generateFolderPath(int $userId, string $path = "", string $extension = ""): string
@@ -24,7 +24,7 @@ class FolderHelper extends FolderChildrenFinder
 
     public function getFolderSize(Folder $folder): int
     {
-        $folderChildren = $this->getFolderChildren($folder);
+        $folderChildren = $this->childrenFinder->getFolderChildren($folder);
         $size = 0;
 
         foreach ($folderChildren as $folderChild) {

@@ -8,14 +8,17 @@ use Illuminate\Database\Eloquent\Collection;
 
 class FolderChildrenFinder
 {
-    private \Illuminate\Support\Collection $allFolderChildren;
-
-    public function __construct()
+    public function getFolderChildren(Folder $folder): \Illuminate\Support\Collection
     {
-        $this->allFolderChildren = collect();
+        $allChildren = collect();
+        $visitedFolders = [];
+
+        $this->getFolderChildrenRecursive($folder, $allChildren, $visitedFolders);
+
+        return $allChildren;
     }
 
-    protected function getFolderChildren(Folder $folder, &$visitedFolders = [])
+    private function getFolderChildrenRecursive(Folder $folder, \Illuminate\Support\Collection &$allChildren, array &$visitedFolders): void
     {
         if (in_array($folder->id, $visitedFolders)) {
             return;
@@ -23,36 +26,23 @@ class FolderChildrenFinder
 
         $visitedFolders[] = $folder->id;
 
-        $foundChildren = $this->getFoundChildren($folder->id);
+        $childFolders = $this->getChildFolders($folder->id);
+        $childFiles = $this->getChildFiles($folder->id);
 
-        if ($foundChildren->isEmpty()) {
-            return $this->allFolderChildren;
+        $allChildren = $allChildren->merge($childFolders)->merge($childFiles);
+
+        foreach ($childFolders as $childFolder) {
+            $this->getFolderChildrenRecursive($childFolder, $allChildren, $visitedFolders);
         }
-
-        $this->allFolderChildren = $this->allFolderChildren->merge($foundChildren);
-
-        foreach ($foundChildren as $foundChild) {
-            if ($foundChild instanceof Folder) {
-                $this->getFolderChildren($foundChild, $visitedFolders);
-            }
-        }
-
-        return $this->allFolderChildren;
     }
 
-    protected function getFoundChildren(int $parentId)
+    private function getChildFolders(int $parentId): Collection
     {
-        $foundChildrenFolder = Folder::query()
-            ->where('parent_id', $parentId)
-            ->get();
+        return Folder::where('parent_id', $parentId)->get();
+    }
 
-        $foundChildrenFile = File::query()
-            ->where('parent_id', $parentId)
-            ->get();
-
-        if ($foundChildrenFolder->isEmpty())
-            return $foundChildrenFile;
-
-        return $foundChildrenFolder->merge($foundChildrenFile);
+    private function getChildFiles(int $parentId): Collection
+    {
+        return File::where('parent_id', $parentId)->get();
     }
 }

@@ -2,7 +2,6 @@ import {useForm} from "@inertiajs/react";
 
 export default function DownloadFolder({
     folder,
-    setActionFolder,
     user
 }) {
 
@@ -13,7 +12,7 @@ export default function DownloadFolder({
 
     const sendDownloadRequest = (e) => {
         e.preventDefault();
-        window.location.href = route('download.folders', data); // ajoute l'id ici
+        window.location.href = route('download.folder', data);
     };
 
     return (
