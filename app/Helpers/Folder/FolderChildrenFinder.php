@@ -15,11 +15,6 @@ class FolderChildrenFinder
         $this->allFolderChildren = collect();
     }
 
-    private function getAllFolderChildren(): \Illuminate\Support\Collection
-    {
-        return $this->allFolderChildren;
-    }
-
     protected function getFolderChildren(Folder $folder, &$visitedFolders = [])
     {
         if (in_array($folder->id, $visitedFolders)) {

@@ -13,14 +13,8 @@ export default function DownloadFolder({
 
     const sendDownloadRequest = (e) => {
         e.preventDefault();
-
-        console.log(folder);
-
-        e.preventDefault();
-
-        post(route('download.folders'));
-    }
-
+        window.location.href = route('download.folders', data); // ajoute l'id ici
+    };
 
     return (
         <button onClick={sendDownloadRequest} className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10 hover:bg-indigo-300 rounded-full">

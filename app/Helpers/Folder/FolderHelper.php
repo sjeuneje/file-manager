@@ -9,6 +9,11 @@ use Illuminate\Support\Str;
 
 class FolderHelper extends FolderChildrenFinder
 {
+    public function getFolderChidren(Folder $folder)
+    {
+        return $this->getFolderChildren($folder);
+    }
+
     public function generateFolderPath(int $userId, string $path = "", string $extension = ""): string
     {
         $generatedPath = (empty($path) ? $userId . '/folders' : $path) . '/';

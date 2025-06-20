@@ -32,7 +32,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
 
         Route::prefix('download')->group(function () {
-            Route::post('folders', [DownloadController::class, 'downloadFolder'])->name('download.folders');
+            Route::get('folders', [DownloadController::class, 'downloadFolder'])->name('download.folders');
         });
     });
 });
