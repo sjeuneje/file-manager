@@ -6,7 +6,7 @@ use App\Helpers\Folder\FolderHelper;
 use App\Http\Requests\Folder\StoreNewFolderRequest;
 use App\Http\Requests\UpdateFolderRequest;
 use App\Models\Folder\Folder;
-use App\Services\FolderService;
+use App\Services\Folder\FolderService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

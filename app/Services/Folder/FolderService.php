@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Folder;
 
 use App\Helpers\Folder\FolderHelper;
 use App\Models\Folder\Folder;

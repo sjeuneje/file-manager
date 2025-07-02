@@ -6,7 +6,7 @@ use App\Helpers\Folder\FolderHelper;
 use App\Http\Requests\StoreFilesRequest;
 use App\Http\Requests\UpdateFileNameRequest;
 use App\Models\File\File;
-use App\Services\FileService;
+use App\Services\File\FileService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
