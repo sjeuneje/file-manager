@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\File\DispatchImportedFiles;
-use App\Actions\File\UpdateFileName;
 use App\Helpers\Folder\FolderHelper;
 use App\Http\Requests\StoreFilesRequest;
 use App\Http\Requests\UpdateFileNameRequest;
@@ -42,7 +40,10 @@ class FileController extends Controller
 
     public function updateName(UpdateFileNameRequest $request)
     {
-        (new UpdateFileName($request))->execute();
+        $this->fileService->rename(
+          $request->id,
+          $request->name
+        );
 
         return redirect()->back()->with([
             'message' => 'Dossier modifié avec succès.'
