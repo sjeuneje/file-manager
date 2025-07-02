@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\DownloadController;
+use App\Http\Controllers\Download\FolderDownloadController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\FolderController;
 use App\Http\Controllers\ProfileController;
@@ -32,7 +32,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
 
         Route::prefix('download')->group(function () {
-            Route::get('folders', [DownloadController::class, 'downloadFolder'])->name('download.folders');
+            Route::get('folder', [FolderDownloadController::class, 'download'])->name('download.folder');
         });
     });
 });

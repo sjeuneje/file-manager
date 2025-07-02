@@ -2,16 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\File\DispatchImportedFiles;
-use App\Actions\File\UpdateFileName;
+use App\Helpers\Folder\FolderHelper;
 use App\Http\Requests\StoreFilesRequest;
 use App\Http\Requests\UpdateFileNameRequest;
 use App\Models\File\File;
+use App\Services\FileService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class FileController extends Controller
 {
+    private FileService $fileService;
+
+    public function __construct()
+    {
+        $this->fileService = new FileService(new FolderHelper());
+    }
+
     /**
      * Store a new file to the storage.
      *
@@ -20,11 +27,11 @@ class FileController extends Controller
      */
     public function store(StoreFilesRequest $request): RedirectResponse
     {
-        (new DispatchImportedFiles(
+        $this->fileService->uploadMultiple(
             $request->allFiles()['files'],
-            $request->parent_id,
-            $request->user_id
-        ))->execute();
+            $request->user_id,
+            $request->parent_id
+        );
 
         return redirect()->back()->with([
             'message' => 'Vos fichiers sont en cours d\'importation.'
@@ -33,7 +40,10 @@ class FileController extends Controller
 
     public function updateName(UpdateFileNameRequest $request)
     {
-        (new UpdateFileName($request))->execute();
+        $this->fileService->rename(
+          $request->id,
+          $request->name
+        );
 
         return redirect()->back()->with([
             'message' => 'Dossier modifié avec succès.'
