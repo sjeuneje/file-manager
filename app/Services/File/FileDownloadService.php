@@ -1,36 +1,32 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\File;
 
-use App\Helpers\Folder\FolderHelper;
 use App\Helpers\ZipHelper;
-use App\Models\Folder\Folder;
+use App\Http\Requests\DownloadFileRequest;
+use App\Models\File\File;
 use Illuminate\Support\Facades\Storage;
 use ZipArchive;
 
-class FolderDownloadService
+class FileDownloadService
 {
-    private FolderHelper $folderHelper;
     private ZipHelper $zipHelper;
 
-    public function __construct(FolderHelper $folderHelper, ZipHelper $zipHelper)
+    public function __construct(ZipHelper $zipHelper)
     {
-        $this->folderHelper = $folderHelper;
         $this->zipHelper = $zipHelper;
     }
 
-    public function downloadZip(Folder $folder): string
+    public function downloadZip(File $file): string
     {
-        $tree = $this->folderHelper->buildTree($folder);
-
-        $zipFileName = $folder->name . '-' . now()->timestamp . '.zip';
+        $zipFileName = $file->name . '-' . now()->timestamp . '.zip';
         $zipPath = storage_path("app/tmp/{$zipFileName}");
 
         Storage::makeDirectory('tmp');
 
         $zip = new ZipArchive;
         if ($zip->open($zipPath, ZipArchive::CREATE | ZipArchive::OVERWRITE) === TRUE) {
-            $this->zipHelper->addFolderToZip($tree, $zip);
+            $this->zipHelper->addFileToZip($file, $zip);
             $zip->close();
         } else {
             abort(500, 'Impossible de créer l’archive ZIP.');

@@ -5,6 +5,7 @@ import {useParams} from "react-router";
 import DeleteFile from "@/Components/Table/File/DeleteFile.jsx";
 import UpdateFileName from "@/Components/Table/File/UpdateFileName.jsx";
 import DownloadFolder from "@/Components/Table/Folder/Partials/DownloadFolder.jsx";
+import DownloadFile from "@/Components/Table/File/DownloadFile.jsx";
 
 export default function FolderTable({
     folders,
@@ -151,6 +152,10 @@ export default function FolderTable({
                                             <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{(file.size / (1024 * 1024)).toFixed(2)} MB</td>
                                             <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
                                                 <div className="flex items-center">
+                                                    <DownloadFile
+                                                        file={file}
+                                                        user={user}
+                                                    />
                                                     <UpdateFileName
                                                         file={file}
                                                         setActionFile={setActionFile}

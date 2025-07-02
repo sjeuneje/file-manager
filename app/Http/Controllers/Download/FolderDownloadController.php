@@ -7,10 +7,8 @@ use App\Helpers\ZipHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DownloadFolderRequest;
 use App\Models\Folder\Folder;
-use App\Services\FolderDownloadService;
-use Illuminate\Support\Facades\Storage;
+use App\Services\Folder\FolderDownloadService;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use ZipArchive;
 
 class FolderDownloadController extends Controller
 {

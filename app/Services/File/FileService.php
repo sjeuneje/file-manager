@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\File;
 
 use App\Helpers\Folder\FolderHelper;
 use App\Jobs\StoreImportedFile;
