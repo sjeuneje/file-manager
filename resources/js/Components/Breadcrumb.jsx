@@ -1,6 +1,9 @@
 import { getSiteUrl } from "@/Utils/urls.js";
 
-export default function Breadcrumb() {
+export default function Breadcrumb({
+    title = 'Mon drive',
+    href = '/dashboard'
+}) {
     const breadcrumb = JSON.parse(localStorage.getItem('breadcrumb'));
     const basePath = window.location.protocol + '//' + window.location.hostname + '/dashboard';
 
@@ -23,9 +26,9 @@ export default function Breadcrumb() {
         <section className="flex flex-wrap items-center gap-6">
             <h1
                 className="text-xl font-bold cursor-pointer"
-                onClick={() => window.location.href = getSiteUrl() + "/dashboard"}
+                onClick={() => window.location.href = getSiteUrl() + href}
             >
-                Mon Drive
+                {title}
             </h1>
             {breadcrumb.map((el, i) => {
                 return (

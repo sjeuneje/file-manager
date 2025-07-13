@@ -40,4 +40,36 @@ class DashboardController extends Controller
                 ->get(),
         ]);
     }
+
+    public function trash(Request $request)
+    {
+        return Inertia::render('DashboardTrash', [
+            'folders' => Folder::where('user_id', Auth::user()->id)
+                ->with('owner')
+                ->when(!empty($request->parent_id), function ($q) use ($request) {
+                    $q->where('parent_id', '=', $request->parent_id);
+                })
+                ->when(empty($request->parent_id), function ($q) use ($request) {
+                    $q->whereNull('parent_id');
+                })
+                ->whereNotNull('deleted_at')
+                ->orderBy('deleted_at', 'desc')
+                ->get()
+                ->map(function ($folder) {
+                    $folder->size = (new FolderHelper())->getFolderSize($folder);
+                    return $folder;
+                }),
+            'files' => File::where('user_id', Auth::user()->id)
+                ->with('owner')
+                ->when(!empty($request->parent_id), function ($q) use ($request) {
+                    $q->where('parent_id', '=', $request->parent_id);
+                })
+                ->when(empty($request->parent_id), function ($q) use ($request) {
+                    $q->whereNull('parent_id');
+                })
+                ->whereNotNull('deleted_at')
+                ->orderBy('deleted_at', 'desc')
+                ->get(),
+        ]);
+    }
 }

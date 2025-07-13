@@ -15,6 +15,7 @@ Route::get('/', function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::prefix('dashboard')->group(function () {
         Route::get('', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('trash', [DashboardController::class, 'trash'])->name('dashboard.trash');
 
         Route::prefix('folders')->group(function () {
             Route::post('', [FolderController::class, 'store'])->name('dashboard.folders.create');
